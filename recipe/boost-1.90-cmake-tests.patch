@@ -1,0 +1,21 @@
+--- cmake/qpmad_add_test.cmake
++++ cmake/qpmad_add_test.cmake
+@@ -3,7 +3,6 @@
+     add_executable(${TGT_NAME} "${TEST_SOURCES}")
+     set_target_properties(${TGT_NAME} PROPERTIES OUTPUT_NAME "${TEST_NAME}")
+     target_link_libraries(${TGT_NAME} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARIES})
+-    target_link_libraries(${TGT_NAME} ${Boost_SYSTEM_LIBRARIES})
+     target_link_libraries(${TGT_NAME} ${Boost_TIMER_LIBRARIES})
+     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+ endfunction()
+--- test/CMakeLists.txt
++++ test/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ include(qpmad_add_test)
+ 
+-find_package(Boost REQUIRED unit_test_framework timer system)
++set(Boost_NO_BOOST_CMAKE ON)
++find_package(Boost REQUIRED unit_test_framework timer)
+ include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+ 
+ get_cmake_property(VARNAMES VARIABLES)
